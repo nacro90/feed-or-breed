@@ -1,4 +1,7 @@
 import pygame
+
+from target import Target
+
 from snake import Snake
 
 from food import Food
@@ -23,22 +26,26 @@ def main():
 
     generated_foods: List[Food] = []
 
-    food_generator = FoodGenerator(SURFACE_SIZE, generation_rate=5, generating=True)
+    food_generator = FoodGenerator(SURFACE_SIZE, generation_rate=1, generating=True)
 
     snake = Snake(
         initial_position=Position(400, 400), 
         initial_velocity=Velocity(90, 100))
 
+    target = None
+
     terminate = False
     while not terminate:
+
+        # Event handling
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 terminate = True
+            elif event.type == pygame.MOUSEMOTION:
+                position = event.pos
+                target = Target(Position(event.pos[0], event.pos[1]), visible=True)
 
         surface.fill(BACKGROUND_COLOR.as_tuple())
-        
-        snake.commit_movement(FPS)
-        snake.render(surface, FPS)
 
         food_generator.generate_in_game_loop(generated_foods, FPS)
         for food in generated_foods:
@@ -46,6 +53,13 @@ def main():
                 food.render(surface, FPS)
             else:
                 generated_foods.remove(food)
+        
+        snake.set_velocity_for_target(target.position)
+        snake.commit_movement(FPS)
+        snake.render(surface, FPS)
+
+        if target is not None:
+            target.render(surface, FPS)
         
         pygame.display.update()
         clock.tick(FPS)

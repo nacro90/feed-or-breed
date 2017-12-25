@@ -51,18 +51,18 @@ class Velocity:
 
         angle = abs(math.degrees(math.atan(y / x)))
 
-        if y > 0 and x > 0:
+        if x > 0 and y > 0:
             return angle
         elif x < 0 and y > 0:
-            return angle + 90
+            return 180 - angle
         elif x > 0 and y < 0:
-            return 270 + angle
+            return 360 - angle
         elif x < 0 and y < 0:
             return 180 + angle
 
 def main():
     """ Created for test purposes """
-    print(Velocity.calculate_angle(-3, -3))
+    print(Velocity.calculate_angle(3, 3))
 
 if __name__ == '__main__':
     main()
