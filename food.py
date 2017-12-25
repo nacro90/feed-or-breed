@@ -22,7 +22,7 @@ class Food(Renderable):
     EXISTENCE_LENGTH = 5.0
 
     def __init__(self, position: Position, size: Size = Size(10, 10),
-                 color: Color = Color(250, 250, 250, 255)):
+                 color: Color = Color(153, 184, 152, 255)):
         Renderable.__init__(self)
 
         self.size = size
@@ -30,17 +30,19 @@ class Food(Renderable):
         self.color = color
         self.remaining_life = self.EXISTENCE_LENGTH
 
-    def draw(self, surface: pygame.surface.Surface, fps: int):
+    def _draw(self, surface: pygame.surface.Surface, fps: int):
         """
-        Renders the food considering FPS value.
+        Renders the food considering the FPS value.
         ___
 
-        ### Parameters
+        ### Arguments
          - `surface (pygame.surface.Surface)`: PyGame surface that the food will be drawn on.
          - `fps`: The FPS (Frames per Second) value of the game
         """
-        gfxdraw.aacircle(surface, self.position.x, self.position.y, self.radius(), self.color.as_tuple())
-        gfxdraw.filled_circle(surface, self.position.x, self.position.y, self.radius(), self.color.as_tuple())
+        gfxdraw.aacircle(surface, self.position.x, self.position.y,
+                         self.radius(), self.color.as_tuple())
+        gfxdraw.filled_circle(
+            surface, self.position.x, self.position.y, self.radius(), self.color.as_tuple())
         self.remaining_life -= 1 / fps
 
     def is_alive(self) -> bool:

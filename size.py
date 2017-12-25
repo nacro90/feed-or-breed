@@ -5,7 +5,7 @@ class Size:
     A basic class for simplifying size operations.
     ___
     
-    ### Parameters
+    ### Arguments
     - `width (int)`: Width of the size.
     - `height (int)`: Height of the size.
     """

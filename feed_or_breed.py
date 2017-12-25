@@ -1,14 +1,18 @@
 import pygame
-from position import Position
-from color import Color
-from size import Size
+from snake import Snake
+
 from food import Food
 from food_generator import FoodGenerator
+
+from position import Position
+from velocity import Velocity
+from color import Color
+from size import Size
 
 from typing import List
 
 SURFACE_SIZE = Size(900, 675)
-BACKGROUND_COLOR = Color(21, 21, 21)
+BACKGROUND_COLOR = Color(42, 54, 59)
 FPS = 60
 
 def main():
@@ -19,7 +23,11 @@ def main():
 
     generated_foods: List[Food] = []
 
-    food_generator = FoodGenerator(SURFACE_SIZE, generation_rate=10, generating=True)
+    food_generator = FoodGenerator(SURFACE_SIZE, generation_rate=5, generating=True)
+
+    snake = Snake(
+        initial_position=Position(400, 400), 
+        initial_velocity=Velocity(90, 100))
 
     terminate = False
     while not terminate:
@@ -28,11 +36,14 @@ def main():
                 terminate = True
 
         surface.fill(BACKGROUND_COLOR.as_tuple())
+        
+        snake.commit_movement(FPS)
+        snake.render(surface, FPS)
 
         food_generator.generate_in_game_loop(generated_foods, FPS)
         for food in generated_foods:
             if food.is_alive():
-                food.draw(surface, FPS)
+                food.render(surface, FPS)
             else:
                 generated_foods.remove(food)
         

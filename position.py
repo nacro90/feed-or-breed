@@ -8,12 +8,12 @@ class Position:
     A basic class for simplifying position operations.
     ___
 
-    ### Parameters
+    ### Arguments
     - `x (int)`: Location in X axis.
     - `y (int)`: Location in Y axis.
     """
 
-    def __init__(self, x: int, y: int):
+    def __init__(self, x: float, y: float):
         self.x = int(x)
         self.y = int(y)
 
@@ -40,7 +40,7 @@ class Position:
         ### Returns
         `tuple (int, int)`: X and Y distance to `position` object
         """
-        return int(abs(self.x - position.x)), int(abs(self.y - position.y))
+        return abs(self.x - position.x), abs(self.y - position.y)
 
     def as_tuple(self) -> Tuple[int, int]:
         """

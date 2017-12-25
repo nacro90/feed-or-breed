@@ -21,12 +21,12 @@ class Renderable:
         
         ### Arguments
          - `surface (pygame.surface.Surface)`: PyGame surface that the food will be drawn on.
-         - `fps`: The FPS (Frames per Second) value of the game
+         - `fps (int)`: The FPS (Frames per Second) value of the game
         """
         if self.visible:
-            self.draw(surface, fps)
+            self._draw(surface, fps)
         
-    def draw(self, surface, fps) -> None:
+    def _draw(self, surface, fps) -> None:
         """
         Abstract method that draws the object if necessary conditions are met in `render()`.
 
@@ -35,7 +35,7 @@ class Renderable:
 
         ### Arguments
          - `surface (pygame.surface.Surface)`: PyGame surface that the food will be drawn on.
-         - `fps`: The FPS (Frames per Second) value of the game
+         - `fps (int)`: The FPS (Frames per Second) value of the game
 
         ### Raises
         `NotImplementedError`: If the method called without implementation, 

@@ -43,7 +43,7 @@ class FoodGenerator:
         Generates multiple foods at once.
         ___
 
-        ### Parameters
+        ### Arguments
          - `n_foods (int)`: Number of foods to be generated.
 
         ### Returns

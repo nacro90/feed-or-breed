@@ -3,7 +3,7 @@ class Color:
     A basic class for simplifying color operations.
     ___
 
-    ### Parameters
+    ### Arguments
     - `red (int)`: Red value of the color.
     - `green (int)`: Green value of the color.
     - `blue (int)`: Blue color of the color.
@@ -32,6 +32,7 @@ class Color:
             return self.red, self.green, self.blue, self.alpha
         else:
             return self.red, self.green, self.blue
+
 
     def __str__(self):
         s = "Color: red={}, green={}, blue={}, alpha={}"
