@@ -11,10 +11,10 @@ class Velocity:
     - `coefficent (float)`: Velocity coefficent of motion (_Pixels per Second_).
     """
     def __init__(self, angle: float, coefficent: float) -> Tuple[float, float]:
-        self.angle = angle
+        self.angle = angle % 360
         self.coefficent = coefficent
 
-    def axial_motion(self):
+    def axial_motion(self) -> Tuple[float, float]:
         """
         Calculates axial motion.
         ___
@@ -38,12 +38,12 @@ class Velocity:
         ### Returns
         `float`: Calculated angle **in degrees**
         """
-        if x is 0:
+        if x == 0:
             if y >= 0:
                 return 90
             else: 
                 return 270
-        elif y is 0:
+        elif y == 0:
             if x >= 0:
                 return 0
             else:
@@ -59,6 +59,9 @@ class Velocity:
             return 360 - angle
         elif x < 0 and y < 0:
             return 180 + angle
+
+    def __str__(self):
+        return "Velocity: angle={}, coefficent={}".format(self.angle, self.coefficent)
 
 def main():
     """ Created for test purposes """

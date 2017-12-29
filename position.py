@@ -1,6 +1,7 @@
 import math
-
 from typing import Tuple
+
+from velocity import Velocity
 
 
 class Position:
@@ -9,13 +10,27 @@ class Position:
     ___
 
     ### Arguments
-    - `x (int)`: Location in X axis.
-    - `y (int)`: Location in Y axis.
+    - `x (float)`: Location in X axis.
+    - `y (float)`: Location in Y axis.
     """
 
     def __init__(self, x: float, y: float):
-        self.x = int(x)
-        self.y = int(y)
+        self.x = x
+        self.y = y
+
+    @staticmethod
+    def from_position(position: 'Position'):
+        """
+        Method for cloning Position objects
+        ___
+
+        ### Arguments
+        `position (Position)`: Position to be cloned
+        
+        ### Returns
+        `Position`: Cloned position object
+        """
+        return Position(position.x, position.y)
 
     def euclidean_distance_to(self, position: 'Position') -> float:
         """
@@ -30,22 +45,45 @@ class Position:
         distance_x, distance_y = self.axial_distances_to(position)
         return math.sqrt(pow(distance_x, 2) + pow(distance_y, 2))
 
-    def axial_distances_to(self, position: 'Position') -> Tuple[int, int]:
+    def axial_distances_to(self, position: 'Position') -> Tuple[float, float]:
         """
         Measures the axial distances to given `position` argument.
     
         ### Arguments
-        - `position (Position)`:  Position object to measure distance.
+        - `position (Position)`: Position object to measure distance.
 
         ### Returns
-        `tuple (int, int)`: X and Y distance to `position` object
+        `tuple (float, float)`: X and Y distance to `position` object
         """
         return abs(self.x - position.x), abs(self.y - position.y)
 
-    def as_tuple(self) -> Tuple[int, int]:
+    def shift_angular(self, angle: float, amount: float) -> None:
+        """
+        Shifts the position with angular arguments
+    
+        ### Arguments
+        - `angle (float)`: Angle of the motion.
+        - `amount (float)`: Amount of shifting for given angle.
+        """
+        delta_x = math.cos(math.radians(angle)) * amount
+        delta_y = math.sin(math.radians(angle)) * amount
+        self.shift_axial(delta_x, delta_y)
+
+    def shift_axial(self, delta_x: float, delta_y: float) -> None:
+        """
+        Shifts the position with axial arguments.
+
+        ### Arguments
+        - `delta_x (float)`: Difference of X axis value.
+        - `delta_y (float)`: Difference of Y axis value.
+        """
+        self.x += delta_x
+        self.y += delta_y
+
+    def as_tuple(self) -> Tuple[float, float]:
         """
         ### Returns
-        `tuple (int, int)`: Position values as tuple like (x, y)
+        `tuple (float, float)`: Position values as tuple like (x, y)
         """
         return self.x, self.y
 

@@ -51,14 +51,38 @@ class Moveable():
         raise NotImplementedError(
             "Class {} doesn't implement move()".format(self.__class__.__name__))
 
-    def set_velocity_for_target(self, target: Position):
+    def set_velocity_for_target(self, target: Position, easing: float = 40) -> None:
+        """
+        Calculates and sets the angle and the coefficent of moveable's velocity.
+        
+        Decelerate interpolation is used with the equasion of:
+
+        > m = Max velocity of moveable  
+        > d = Distance to target  
+        > e = Easing coefficent
+ 
+        > { m * e / -(d + e)) + m }
+        ___
+
+        ### Arguments
+        `target (Position)`: Target position.
+        `easing [float=40]`: Easing coefficent
+        """
         diff_x = target.x - self.position.x
         diff_y = target.y - self.position.y
         self.velocity.angle = Velocity.calculate_angle(diff_x, diff_y)
+
+        distance = self.position.euclidean_distance_to(target)
+        calculated_coefficent = \
+            (self.max_velocity * easing / -(distance + easing)) + self.max_velocity
+        self.velocity.coefficent = calculated_coefficent
         
 
 def main():
     """ Created for test purposes """
+    m = Moveable(Position(0,0), 20)
+    m.set_velocity_for_target(Position(20,30))
+    print(m.velocity)
 
 if __name__ == '__main__':
     main()
