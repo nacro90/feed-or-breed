@@ -25,7 +25,7 @@ class Position:
         ___
 
         ### Arguments
-        `position (Position)`: Position to be cloned
+         - `position (Position)`: Position to be cloned
         
         ### Returns
         `Position`: Cloned position object
@@ -37,7 +37,7 @@ class Position:
         Measures the euclidean distance to given `position` argument.
     
         ### Arguments
-        - `position (Position)`:  Position object to measure distance.
+         - `position (Position)`:  Position object to measure distance.
 
         ### Returns
         `float`: Euclidean distance to `position`.
@@ -50,7 +50,7 @@ class Position:
         Measures the axial distances to given `position` argument.
     
         ### Arguments
-        - `position (Position)`: Position object to measure distance.
+         - `position (Position)`: Position object to measure distance.
 
         ### Returns
         `tuple (float, float)`: X and Y distance to `position` object
@@ -62,8 +62,8 @@ class Position:
         Shifts the position with angular arguments
     
         ### Arguments
-        - `angle (float)`: Angle of the motion.
-        - `amount (float)`: Amount of shifting for given angle.
+         - `angle (float)`: Angle of the motion.
+         - `amount (float)`: Amount of shifting for given angle.
         """
         delta_x = math.cos(math.radians(angle)) * amount
         delta_y = math.sin(math.radians(angle)) * amount
@@ -74,8 +74,8 @@ class Position:
         Shifts the position with axial arguments.
 
         ### Arguments
-        - `delta_x (float)`: Difference of X axis value.
-        - `delta_y (float)`: Difference of Y axis value.
+         - `delta_x (float)`: Difference of X axis value.
+         - `delta_y (float)`: Difference of Y axis value.
         """
         self.x += delta_x
         self.y += delta_y
@@ -86,6 +86,12 @@ class Position:
         `tuple (float, float)`: Position values as tuple like (x, y)
         """
         return self.x, self.y
+
+    @staticmethod
+    def middle_of(position_1: 'Position', position_2: 'Position'):
+        return Position(
+            (position_1.x + position_2.x) / 2,
+            (position_1.y + position_2.y) / 2)
 
     def __str__(self):
         return "Position: x={}, y={}".format(self.x, self.y)

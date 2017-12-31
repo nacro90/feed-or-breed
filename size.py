@@ -6,8 +6,8 @@ class Size:
     ___
     
     ### Arguments
-    - `width (int)`: Width of the size.
-    - `height (int)`: Height of the size.
+     - `width (int)`: Width of the size.
+     - `height (int)`: Height of the size.
     """
     def __init__(self, width, height):
         self.width = width

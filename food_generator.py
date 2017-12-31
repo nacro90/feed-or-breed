@@ -38,7 +38,7 @@ class FoodGenerator:
                             random.randint(0, self.surface_size.height - 1))
         return Food(position)
 
-    def generate_foods(self, surface_size: Size, n_foods: int = 1):
+    def generate_foods(self, n_foods: int = 1):
         """
         Generates multiple foods at once.
         ___
