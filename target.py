@@ -12,9 +12,9 @@ class Target(Renderable):
     ___
 
     ### Arguments
-    `position (Position)`: Position of the target
-    `size (float)`: Size of each line of crosshair
-    `visible [bool=False]`: Specifies whether render the target or not. 
+     - `position (Position)`: Position of the target
+     - `size (float)`: Size of each line of crosshair
+     - `visible [bool=False]`: Specifies whether render the target or not. 
     """
 
     def __init__(self, position: Position, visible: bool = False, size: int = 20):

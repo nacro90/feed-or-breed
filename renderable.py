@@ -43,3 +43,7 @@ class Renderable:
         """
         raise NotImplementedError(
             "Class {} doesn't implement render()".format(self.__class__.__name__))
+
+    def area(self) -> Size:
+        raise NotImplementedError(
+            "Class {} doesn't implement area()".format(self.__class__.__name__))

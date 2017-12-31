@@ -1,18 +1,17 @@
+import math
+from typing import List
+
 import pygame
 
-from target import Target
-
 from bubble import Bubble
-
+from collision import CollisionDetector
+from color import Color
 from food import Food
 from food_generator import FoodGenerator
-
 from position import Position
-from velocity import Velocity
-from color import Color
 from size import Size
-
-from typing import List
+from target import Target
+from velocity import Velocity
 
 SURFACE_SIZE = Size(900, 675)
 BACKGROUND_COLOR = Color(42, 54, 59)
@@ -28,16 +27,16 @@ def main():
 
     generated_foods: List[Food] = []
 
-    food_generator = FoodGenerator(SURFACE_SIZE, generation_rate=1, generating=True)
+    food_generator = FoodGenerator(SURFACE_SIZE, generation_rate=10, generating=True)
 
-    bubble = Bubble(
-        position=Position(400, 400), 
-        velocity=Velocity(90, 300))
+    collision_detector = CollisionDetector()
+
+    bubble = Bubble(Position(SURFACE_SIZE.width / 2, SURFACE_SIZE.height / 2))
 
     target = Target(Position(0, 0), visible=False)
 
     terminate = False
-    while not terminate:
+    while terminate is not True:
 
         # Event handling
         for event in pygame.event.get():
@@ -56,10 +55,17 @@ def main():
 
         food_generator.generate_in_game_loop(generated_foods, FPS)
         for food in generated_foods:
+            food: Food
             if food.is_alive():
                 food.render(surface, FPS)
             else:
                 generated_foods.remove(food)
+
+        feeding_collisions = collision_detector.detect_feeding([bubble], generated_foods)
+        for collision in feeding_collisions:
+            food = collision.object_2
+            generated_foods.remove(food)
+            bubble.eaten(food)
 
         
         if target.position.euclidean_distance_to(bubble.position) < bubble.velocity.coefficent / FPS:
@@ -85,4 +91,3 @@ def main():
 
 if __name__ == '__main__':
     main()
-

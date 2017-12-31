@@ -7,8 +7,8 @@ class Velocity:
     ___
     
     ### Arguments
-    - `angle (float)`: Angle of motion __in degrees__.
-    - `coefficent (float)`: Velocity coefficent of motion (_Pixels per Second_).
+     - `angle (float)`: Angle of motion __in degrees__.
+     - `coefficent (float)`: Velocity coefficent of motion (_Pixels per Second_).
     """
     def __init__(self, angle: float, coefficent: float) -> Tuple[float, float]:
         self.angle = angle % 360

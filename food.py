@@ -1,10 +1,12 @@
+import math
+
 import pygame
 from pygame import gfxdraw
 
-from size import Size
-from position import Position
 from color import Color
+from position import Position
 from renderable import Renderable
+from size import Size
 
 
 class Food(Renderable):
@@ -19,16 +21,20 @@ class Food(Renderable):
     """
 
     # Food existence length in seconds
-    EXISTENCE_LENGTH = 5.0
+    DEFAULT_EXISTENCE_LENGTH: float = 5.0
 
-    def __init__(self, position: Position, size: Size = Size(10, 10),
+    DEFAULT_RADIUS: float = 5.0
+
+    def __init__(self, position: Position, radius: float = DEFAULT_RADIUS,
+                 existence_length: float = DEFAULT_EXISTENCE_LENGTH,
                  color: Color = Color(153, 184, 152, 255)):
         Renderable.__init__(self)
 
-        self.size = size
+        self.radius = radius
         self.position = position
         self.color = color
-        self.remaining_life = self.EXISTENCE_LENGTH
+        
+        self.existence_length = self.remaining_life = existence_length
 
     def _draw(self, surface: pygame.surface.Surface, fps: int):
         """
@@ -39,10 +45,12 @@ class Food(Renderable):
          - `surface (pygame.surface.Surface)`: PyGame surface that the food will be drawn on.
          - `fps`: The FPS (Frames per Second) value of the game
         """
-        gfxdraw.aacircle(surface, self.position.x, self.position.y,
-                         self.radius(), self.color.as_tuple())
+        gfxdraw.aacircle(
+            surface, int(self.position.x), int(self.position.y),
+            int(self.radius), self.color.as_tuple())
         gfxdraw.filled_circle(
-            surface, self.position.x, self.position.y, self.radius(), self.color.as_tuple())
+            surface, int(self.position.x), int(self.position.y), 
+            int(self.radius), self.color.as_tuple())
         self.remaining_life -= 1 / fps
 
     def is_alive(self) -> bool:
@@ -52,18 +60,8 @@ class Food(Renderable):
         """
         return bool(self.remaining_life > 0)
 
+    def rectangular_size(self):
+        return Size(self.radius * 2, self.radius * 2)
 
-    def radius(self) -> int:
-        """
-        ### Returns 
-        `int`: Radius of the food as integer
-        """
-        return int(self.size.width / 2)
-
-    def __str__(self):
-        s = "Food: position={}, size={}, color={}, remaining_life={}, visible={}"
-        return s.format(self.position.as_tuple(),
-                        self.size.as_tuple(),
-                        self.color.as_tuple(),
-                        self.remaining_life,
-                        self.visible)
+    def area(self):
+        return math.pi * pow(self.radius, 2)
